@@ -1,0 +1,161 @@
+body {
+ background-color:#FFFEF8;
+ margin: 0;
+}
+
+header {
+	display: block;
+	box-sizing: border-box;
+	margin: 0;
+}
+
+.only_admin {
+	display:none;
+}
+
+h1 {
+	display: flex;
+	flex-direction: column;
+	font-family: 'Syne';
+	color: #B1663C
+}
+
+h1 .name_designer {
+	line-height: 26px;
+	font-weight: 800;
+	font-size: 22px;
+	color: #B1663C;
+	font-family: "Syne";
+}
+
+h1 > span {
+	font-family: 'Work Sans';
+	font-size:10px;
+	letter-spacing: 0.1em;
+}
+
+.job_designer h1 {
+	font-size: 10px;
+	line-height: 12px;
+	letter-spacing: 5%;
+	margin-top: 5px;
+	color: #B1663C;
+}
+
+nav ul {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	list-style-type: none;
+}
+
+nav li {
+	padding-left: 50px;
+}
+
+nav a {
+	font-size: 18px;
+	line-height: 19px;
+	color: black;
+	text-decoration: none;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 18.77px;
+}
+
+h2{
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 30px;
+	color: #1D6154
+}
+
+.nav_user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px 50px 0 50px;
+}
+
+.typography_login {
+	font-weight: 600;
+}
+
+.user_login_formulary form {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	font-family: 'Work Sans';
+	line-height: 16.42px;
+	font-size: 14px;
+}
+
+.user_login_formulary {
+	width: 50%;
+	margin: auto;
+	padding: 140px 170px 180px 170px;
+	
+}
+
+.user_login_formulary h2 {
+	text-align: center;
+}
+
+.login_user {
+	padding-bottom: 5px;
+	padding-top: 30px;
+}
+
+.user_login_formulary input {
+	height: 50px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.user_login_formulary a {
+	margin: auto;
+	text-decoration: underline;
+	color: black;
+}
+
+input[type="submit"]{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 179px;
+	text-align: center;
+	border-radius: 60px ;
+}
+
+footer {
+	background-color: white;
+	width: 100%;
+	height: 60px;
+}
+
+footer ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	list-style-type: none;
+	margin-right: 100px;
+}
+
+footer li a {
+	display: flex;
+	flex-direction: row;
+	text-decoration: none;
+	color: #000;
+	margin-top: 24px;
+	font-family: 'Work Sans';
+
+}
+
+.logo_insta {
+	width: 19px;
+	height: 19px;
+	margin-top: 5px;
+}
