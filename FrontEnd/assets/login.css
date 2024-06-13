@@ -82,6 +82,13 @@ h2{
 	font-weight: 600;
 }
 
+.user_login_formulary {
+	width: 50%;
+	margin: auto;
+	padding: 140px 170px 180px 170px;
+	
+}
+
 .user_login_formulary form {
 	display: flex;
 	flex-direction: column;
@@ -91,12 +98,6 @@ h2{
 	font-size: 14px;
 }
 
-.user_login_formulary {
-	width: 50%;
-	margin: auto;
-	padding: 140px 170px 180px 170px;
-	
-}
 
 .user_login_formulary h2 {
 	text-align: center;
