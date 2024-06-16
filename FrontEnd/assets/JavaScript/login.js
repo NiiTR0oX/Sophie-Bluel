@@ -1,44 +1,94 @@
 // input formulary + form quesry.selector //
 
 const loginForm = document.querySelector('.user_login_formulary');
+const emailInput = loginForm.querySelector('input[type="email"]');
+const passwordInput = loginForm.querySelector('input[type="password"]');
 
-async function getLoginFromApi() {
-    await fetch("http://localhost:5678/api/login")
-        .then((response) => {
-          console.log(response)
-          return response.json();
-        }).then ((datas) => {
-            console.log(datas)
-            categories = datas;
-        }).catch((error) => {
-          console.log(error);
-        });
+async function loginToApi(email, password) {
+  try {
+      const response = await fetch('http://localhost:5678/api/users/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+  } catch (error) {
+      console.error('Erreur lors de la requête de connexion:', error);
+      throw error;
+  }
+}
+
+function validateInputs(emailInput, passwordInput) {
+  let formValidation = 0;
+
+
+  emailInput.style.border = '';
+  passwordInput.style.border = '';
+
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (emailInput.value.trim() === "") {
+      emailInput.style.border = '1px solid red';
+  } else if (!emailPattern.test(emailInput.value)) {
+      emailInput.style.border = '1px solid red';
+  } else {
+      formValidation++;
   }
 
-  async function displayAllLogin() {
-    await getLoginFromApi();
-    console.log(login);
-    loginForm.addEventListener('submit', async (event) => {
-        clearError();
-        event.preventDefault()
-        const data = new FormData(loginForm)
-    
-        const response = await login(data)
-        const user = await response.json()
-        console.log(user)
-    
-        if (response.status === 200) {
-            sessionStorage.setItem('token', user.token)
-            document.querySelector(".button").innerHTML = "log out";
-            } else if (response.status !== 200) {
-            console.log(response.status);
-            loginError();
-        }
-    })
+
+  if (passwordInput.value.trim() === "") {
+      passwordInput.style.border = '1px solid red';
+  } else {
+      formValidation++;
   }
-  displayAllLogin();
+
+  return formValidation === 2;
+}
 
 
+async function handleLogin() {
+  loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-// vérifier le mail et mot de passe //
-// envoyer mon fetch si réponse ok je redirige sur la page d'acceuil sinon j'affiche une erreur//
+
+      if (validateInputs(emailInput, passwordInput)) {
+          try {
+
+              const response = await fetch("http://localhost:5678/api/users/login", {
+                  method: "POST",
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      email: emailInput.value,
+                      password: passwordInput.value
+                  }),
+              });
+
+              if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+
+              const data = await response.json();
+
+
+              sessionStorage.setItem('token', data.token);
+
+
+              window.location.href = "/admin";
+
+          } catch (error) {
+              console.error('Erreur lors de la tentative de connexion:', error);
+
+          }
+      }
+  });
+}
+handleLogin();
