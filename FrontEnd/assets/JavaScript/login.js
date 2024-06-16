@@ -34,17 +34,15 @@ function validateInputs(emailInput, passwordInput) {
 
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (emailInput.value.trim() === "") {
-      emailInput.style.border = '1px solid red';
+  if (emailInput.value.trim() === "") {;
   } else if (!emailPattern.test(emailInput.value)) {
-      emailInput.style.border = '1px solid red';
   } else {
       formValidation++;
   }
 
 
   if (passwordInput.value.trim() === "") {
-      passwordInput.style.border = '1px solid red';
+
   } else {
       formValidation++;
   }
