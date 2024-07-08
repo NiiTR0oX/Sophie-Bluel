@@ -49,8 +49,7 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin:auto;
+	
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 	background-color: #fffef8
@@ -58,10 +57,17 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+	max-width: 1140px;
+	margin:auto;
+}
+
+main {
+	max-width: 1140px;
+	margin:auto;
 }
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
 h1{
@@ -101,6 +107,10 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+a {
+	text-decoration: none;
+	color: #000;
 }
 
 li:hover {
@@ -186,6 +196,11 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+footer {
+	max-width: 1140px;
+	margin:auto;
 }
 
 footer nav ul {

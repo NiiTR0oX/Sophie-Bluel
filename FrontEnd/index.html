@@ -7,8 +7,11 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="./assets/admin.css">
+	<link rel="stylesheet" href="./assets/modal.css">
 </head>
 <body>
 <header>
@@ -17,7 +20,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li id="login_link"><a href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram" class="logo_insta"></li>
 		</ul>
 	</nav>
@@ -35,7 +38,10 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="modify">
+			<h2>Mes Projets</h2>
+		</div>
+
 		<div id="categories">
 			<!-- <button class="button button_active" value="0">Tous</button>
 			<button class="button" value="1">Objets</button>
@@ -89,6 +95,7 @@
 				<figcaption>Hotel First Arte - New Delhi</figcaption>
 			</figure> -->
 		</div>
+		
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -112,6 +119,24 @@
 		</ul>
 	</nav>
 </footer>
+<div class="modal_container hidden">
+	<div class="overlay"></div>
+	<div class="modal">
+		<span class="close">&times;</span>
+		<div class="modal_1">
+			<h3>Galerie photo</h3>
+			<div class="gallery_photo"></div>
+			<hr>
+			<button id="btn_add">Ajouter une photo</button> 
+		</div>
+		<div class="modal_2 hidden">
+			<h2>Modifier le contenu</h2>
+			<p>Ici, vous pouvez modifier le contenu.</p>
+		</div>
+	</div>
+</div>
 <script src="./assets/JavaScript/index.js"></script>
+<script src="./assets/JavaScript/modAdmin.js"></script>
+<script src="./assets/JavaScript/modal.js"></script>
 </body>
 </html>

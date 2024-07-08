@@ -20,7 +20,7 @@
                     <li><a href="index.html#contact">contact</a></li>
                     <li>
                         <a class=" typography_login" href="login.html">login</a>
-                        <a id="nav-logout" class="only_admin" href="#">logout</a>
+                        
                     </li>
                     <li><a href="https://www.instagram.com/" target="_blank"><img class="logo_insta" src="./assets/icons/instagram.png" alt="Instagram"></a></li>
                 </ul>
@@ -34,8 +34,10 @@
             <form id="user_login_form" method="post" action="#">
                 <label class="login_user" for="email">E-mail</label>
                 <input type="email" name="email" id="email" required value="sophie.bluel@test.tld" type="text">
+                <p class="emailerror"></p>
                 <label class="login_user" for="password">Mot de passe</label>
                 <input type="password" name="password" id="password" required value="S0phie" type="password">
+                <p class="passworlderror"></p>
                 <input type="submit" id="submit" value="Se connecter">
                 <a href="#">Mot de passe oublié</a>
             </form>

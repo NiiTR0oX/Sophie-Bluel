@@ -1,0 +1,28 @@
+#admin-navbar {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#admin-navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#admin-navbar a:hover {
+    text-decoration: underline;
+}
+
+.modify {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 20px;
+}
+p {
+    display: contents;
+}

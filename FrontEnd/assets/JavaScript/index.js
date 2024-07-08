@@ -22,6 +22,7 @@ async function getWorksFromApi() {
 
 async function displayAllWorks() {
   await getWorksFromApi();
+  gallery.innerHTML = ""
   works.forEach((work, index) => {
     console.log(work);
     // Create <figure>
@@ -71,6 +72,14 @@ async function displayAllCategories() {
       button.setAttribute("data_category_id", category.id)
       button.addEventListener('click', (event) => {
         const categoryId = event.target.getAttribute("data_category_id")
+        const categoryButtons = document.querySelectorAll("#categories button")
+        for (let categoryButton of categoryButtons){
+          if (categoryButton.getAttribute("data_category_id") === categoryId) {
+            categoryButton.classList.add("button_active")
+          }else {
+            categoryButton.classList.remove("button_active")
+          }
+        }
         const Myfigures = document.querySelectorAll(".gallery figure")
         if (categoryId === "0") {
           Myfigures.forEach((figure, index)=> {
