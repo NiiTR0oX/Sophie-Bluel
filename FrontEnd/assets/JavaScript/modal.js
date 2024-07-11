@@ -137,30 +137,59 @@ if (token) {
         }
     }
 
-   function displayAddProjectForm () {
+    function displayAddProjectForm() {
 
-    // modifier la génération du html pour avoir la balise image / le titre en input et la catégorie avec un select
-    // input de type file avec la balise image(Filereader)
-    
-    //changer les champs de form id="addProjectForm" enctype="multipart/form-data" method="POST" action="/"
-    
-    const formHtml = `
-        <form id="addProjectForm" enctype="multipart/form-data" method="POST" action="/">
-            <div class="form-group">
-                <label for="projectName">Nom du projet</label>
-                <input type="text" id="projectName" name="projectName" required>
+        const formHtml = ` 
+            <form id="addProjectForm" enctype="multipart/form-data" method="POST" action="/">
+            <div>
+            <i class="fa-sharp fa-regular fa-arrow-left"></i>
+            
             </div>
-            <div class="form-group">
-                <label for="projectDescription">Description</label>
-                <textarea id="projectDescription" name="projectDescription" required></textarea>
+            <div>
+            <h3>Ajout photo</h3>
             </div>
-            <button type="submit" id="addProjectSubmit">Ajouter le projet</button>
-        </form>
-    `;
-    modal2.innerHTML = formHtml;
-}
-
-displayAddProjectForm()
+            <div class="form-group-photo">
+                    <i class="fa-regular fa-image" aria-hidden="true"></i>
+                    <label for="projectImage">+ Ajouter une photo</label>
+                    <input type="file" id="projectImage" name="projectImage" accept="image/*" required>
+                    <img id="previewImage" src="#" alt="Aperçu de l'image" style="display: none; width: 200px; height: auto;"/>
+                </div>
+                <div class="form-group">
+                    <label for="projectName">Titre</label>
+                    <input type="text" id="projectName" name="projectName" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectCategory">Catégorie</label>
+                    <select id="projectCategory" name="projectCategory" required>
+                        <option value="categorie1">Catégorie 1</option>
+                        <option value="categorie2">Catégorie 2</option>
+                        <option value="categorie3">Catégorie 3</option>
+                        <!-- Ajouter d'autres options de catégorie si nécessaire -->
+                    </select>
+                </div>
+                <hr>
+                <button type="submit" id="addProjectSubmit">Valider</button>
+            </form>
+        `;
+        modal2.innerHTML = formHtml;
+    
+        document.getElementById('projectImage').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+    
+            reader.onload = function(e) {
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+    
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    displayAddProjectForm();
 
 let addProjectForm = document.querySelector('#addProjectForm')
 
@@ -168,96 +197,161 @@ let addProjectForm = document.querySelector('#addProjectForm')
 
 //     const form = document.getElementById('projectForm');
 
-    addProjectForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+document.getElementById('projectImage').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
-        clearErrors();
+    reader.onload = function(e) {
+        const previewImage = document.getElementById('previewImage');
+        previewImage.src = e.target.result;
+        previewImage.style.display = 'block';
+    };
 
-        // changer les champs après avoir modifier le html à la 147
-        // refaire la validation
-        // faire un appel API
-
-        const projecttitle= document.getElementById('projectName').value.trim();
-        const projectDescription = document.getElementById('projectDescription').value.trim();
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
-
-        let valid = true;
-
-        if (!projectName) {
-            showError('projectNameError', 'Le nom du projet est requis.');
-            valid = false;
-        }
-
-        if (!projectDescription) {
-            showError('projectDescriptionError', 'La description du projet est requise.');
-            valid = false;
-        }
-
-        if (!startDate) {
-            showError('startDateError', 'La date de début est requise.');
-            valid = false;
-        }
-
-        if (!endDate) {
-            showError('endDateError', 'La date de fin est requise.');
-            valid = false;
-        }
-
-        if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
-            showError('endDateError', 'La date de fin doit être postérieure à la date de début.');
-            valid = false;
-        }
-
-        if (valid) {
-            const projectData = {
-                projectName,
-                projectDescription,
-                startDate,
-                endDate
-            };
-
-            fetch('http://localhost:5678/api/works', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(projectData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Erreur réseau lors de l\'envoi du formulaire.');
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Projet ajouté avec succès !');
-                    form.reset();
-                } else {
-                    alert('Une erreur est survenue : ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert('Une erreur est survenue lors de l\'envoi des données.');
-            });
-        }
-    });
-
-    function showError(elementId, message) {
-        const errorElement = document.getElementById(elementId);
-        if (errorElement) {
-            errorElement.textContent = message;
-        }
+    if (file) {
+        reader.readAsDataURL(file);
     }
+});
 
-    function clearErrors() {
-        document.querySelectorAll('.error').forEach(error => error.textContent = '');
-    }
+// let addProjectForm = document.querySelector('#addProjectForm');
 
+// addProjectForm.addEventListener('submit', function(event) {
+//     event.preventDefault();
+
+//     clearErrors();
+
+//         // changer les champs après avoir modifier le html à la 147
+//         // refaire la validation
+//         // faire un appel API
+
+//     const projectName = document.getElementById('projectName').value;
+//     const projectDescription = document.getElementById('projectDescription').value;
+//     const projectCategory = document.getElementById('projectCategory').value;
+//     const projectImage = document.getElementById('projectImage').files[0];
+
+//         if (!projectName || !projectDescription || !projectCategory || !projectImage) {
+//             displayError('Tous les champs sont requis.');
+//             return;
+//         }
+
+//     const formData = new FormData();
+//     formData.append('projectName', projectName);
+//     formData.append('projectDescription', projectDescription);
+//     formData.append('projectCategory', projectCategory);
+//     formData.append('projectImage', projectImage);
+
+//     fetch('/api/addProject', {
+//         method: 'POST',
+//         body: formData
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (data.success) {
+//                 alert('Projet ajouté avec succès');
+//                 addProjectForm.reset();
+//                 document.getElementById('previewImage').style.display = 'none';
+//             } else {
+//                 displayError(data.message || 'Une erreur est survenue lors de l\'ajout du projet.');
+//             }
+//         })
+//         .catch(error => {
+//             displayError('Une erreur est survenue lors de l\'ajout du projet.');
+//             console.error('Error:', error);
+//         });
 // });
 
+// function clearErrors() {
+//     const errorElement = document.getElementById('formError');
+//     if (errorElement) {
+//         errorElement.remove();
+//     }
+// }
 
-// Gérer les 3 champs en vérifiant qui ne sont pas vide si il ne le sont pas vide, activer le bouton le tout dans une function
+// function displayError(message) {
+//     const errorElement = document.createElement('div');
+//     errorElement.id = 'formError';
+//     errorElement.style.color = 'red';
+//     errorElement.innerText = message;
+//     const form = document.getElementById('addProjectForm');
+//     form.prepend(errorElement);
+// }
+
+// displayAddProjectForm();
+
+//         let valid = true;
+
+//         if (!projectName) {
+//             showError('projectNameError', 'Le nom du projet est requis.');
+//             valid = false;
+//         }
+
+//         if (!projectDescription) {
+//             showError('projectDescriptionError', 'La description du projet est requise.');
+//             valid = false;
+//         }
+
+//         if (!startDate) {
+//             showError('startDateError', 'La date de début est requise.');
+//             valid = false;
+//         }
+
+//         if (!endDate) {
+//             showError('endDateError', 'La date de fin est requise.');
+//             valid = false;
+//         }
+
+//         if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
+//             showError('endDateError', 'La date de fin doit être postérieure à la date de début.');
+//             valid = false;
+//         }
+
+//         if (valid) {
+//             const projectData = {
+//                 projectName,
+//                 projectDescription,
+//                 startDate,
+//                 endDate
+//             };
+
+//             fetch('http://localhost:5678/api/works', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     'Authorization': `Bearer ${token}`
+//                 },
+//                 body: JSON.stringify(projectData)
+//             })
+//             .then(response => {
+//                 if (response.ok) {
+//                     return response.json();
+//                 }
+//                 throw new Error('Erreur réseau lors de l\'envoi du formulaire.');
+//             })
+//             .then(data => {
+//                 if (data.success) {
+//                     alert('Projet ajouté avec succès !');
+//                     form.reset();
+//                 } else {
+//                     alert('Une erreur est survenue : ' + data.message);
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Erreur:', error);
+//                 alert('Une erreur est survenue lors de l\'envoi des données.');
+//             });
+//         }
+
+//     function showError(elementId, message) {
+//         const errorElement = document.getElementById(elementId);
+//         if (errorElement) {
+//             errorElement.textContent = message;
+//         }
+//     }
+
+//     function clearErrors() {
+//         document.querySelectorAll('.error').forEach(error => error.textContent = '');
+//     }
+
+// // });
+
+
+// // Gérer les 3 champs en vérifiant qui ne sont pas vide si il ne le sont pas vide, activer le bouton le tout dans une function

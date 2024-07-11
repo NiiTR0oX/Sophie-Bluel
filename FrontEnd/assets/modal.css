@@ -27,7 +27,6 @@
 }
 
 .close {
-    color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -37,6 +36,15 @@
 .close:focus {
     color: black;
     text-decoration: none;
+    cursor: pointer;
+}
+
+.fa-arrow-left {
+    width: 21px;
+    height: 21px;
+
+    color: #000;
+
     cursor: pointer;
 }
 
@@ -50,6 +58,16 @@
     gap: 20px;
     justify-content: center;
     padding: 20px;
+}
+h3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    font-size: 26px;
+    font-family: 'Work Sans';
+    font-weight: 400;
+    line-height: 30.5px;
 }
 .gallery_photo figure {
     position: relative;
@@ -118,24 +136,99 @@
     color: #0000;
 } */
 
+#btn_add {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    width: 237px;
+    height: 36px;
+
+    margin-left: 130px;
+    margin-top: 30px;
+
+
+    background-color: #1D6154;
+    color: white;
+    border: none;
+
+    border-radius: 60px;
+
+    font-family: 'Syne';
+	font-weight: 700;
+    font-size: 14px;
+    line-height: 16.8px;
+}
+
 #addProjectForm {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
     font-family: Arial, sans-serif;
 }
 
+#addProjectForm .form-group-photo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 420px;
+    height: 169px;
+
+    margin-top: 20px;
+    
+    border-radius: 3px;
+
+    background-color: #e8f1f7;
+
+}
+#addProjectForm .form-group-photo i {
+
+    width: 76px;
+    height: 76px;
+
+    margin-top: 20px;
+
+    font-size: 60px;
+
+    color: #B9C5CC;
+}
+#addProjectForm .form-group-photo label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50px;
+
+    margin-top: 10px;
+
+    width: 173px;
+    height: 36px;
+
+    background-color: #cbd6dc;
+    color: #306685;
+
+    font-size: 14px;
+    font-family: 'Work Sans';
+    font-weight: 500;
+
+    cursor: pointer;
+}
+/* #addProjectForm label:hover {
+    background-color: #0056b3;
+} */
+
+
 #addProjectForm input,
 #addProjectForm textarea {
-    width: calc(100% - 20px);
+    width: 420px;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     font-size: 16px;
+    box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.09);
+    border: none;
 }
 
 #addProjectForm label {
@@ -145,19 +238,36 @@
     color: #333;
 }
 
-#addProjectForm button{
+#addProjectForm button[type=submit]{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin-left: 115px;
+    margin-top: 25px;
+
+    width: 237px;
+    height: 36px;
+
     padding: 10px 15px;
-    background-color: #007bff;
+
+    background-color: #a7a7a7;
+    color: #fff;
+
     border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
+    border-radius: 60px;
+    
+    font-size: 14px;
+    font-family: 'Syne';
+    font-weight: 700;
+    line-height: 16.8px;
+
     cursor: pointer;
 }
+ 
 
-#addProjectForm button:hover {
-    background-color: #0056b3;
-}
+
+
 
 .error {
     color: red;
