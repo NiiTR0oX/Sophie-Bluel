@@ -37,4 +37,5 @@ if(token) {
         <i class="fa-regular fa-pen-to-square"></i>
         <p>Modifier</p>
         </div>`
+    buttonContainer.style.display ='none'
 }

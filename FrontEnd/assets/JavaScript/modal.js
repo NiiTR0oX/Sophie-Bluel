@@ -9,6 +9,8 @@
 let btnAdd = document.querySelector('#btn_add')
 let modal1 = document.querySelector('.modal_1')
 let modal2 = document.querySelector('.modal_2')
+let arrowLeft = document.querySelector('.fa-arrow-left')
+let windowClose = document.querySelector('#close')
 
 
 
@@ -32,6 +34,7 @@ if (token) {
         console.log(event)
         modal1.classList.toggle('hidden')
         modal2.classList.toggle('hidden')
+        arrowLeft.classList.toggle('hidden')
     })
 
     modifyButton.addEventListener('click', function(event) {
@@ -96,7 +99,6 @@ if (token) {
                 let trashIcon = document.createElement('i');
                     trashIcon.classList.add('fa-solid', 'fa-trash-can');
                 deleteButton.appendChild(trashIcon);
-                // deleteButton.innerHTML = '&#128465;';
                 deleteButton.addEventListener('click', function() {
                     console.log(`Supprimer le projet avec l'ID: ${work.id}`);
                     deleteProject(work.id);
@@ -142,7 +144,6 @@ if (token) {
         const formHtml = ` 
             <form id="addProjectForm" enctype="multipart/form-data" method="POST" action="/">
             <div>
-            <i class="fa-sharp fa-regular fa-arrow-left"></i>
             
             </div>
             <div>
@@ -153,6 +154,7 @@ if (token) {
                     <label for="projectImage">+ Ajouter une photo</label>
                     <input type="file" id="projectImage" name="projectImage" accept="image/*" required>
                     <img id="previewImage" src="#" alt="Aperçu de l'image" style="display: none; width: 200px; height: auto;"/>
+                    <p>jpg, png : 4mo max</p>
                 </div>
                 <div class="form-group">
                     <label for="projectName">Titre</label>
@@ -161,17 +163,19 @@ if (token) {
                 <div class="form-group">
                     <label for="projectCategory">Catégorie</label>
                     <select id="projectCategory" name="projectCategory" required>
-                        <option value="categorie1">Catégorie 1</option>
-                        <option value="categorie2">Catégorie 2</option>
-                        <option value="categorie3">Catégorie 3</option>
+                        <option value="1">Objet</option>
+                        <option value="categorie2">Appartement</option>
+                        <option value="categorie3">Hotel & restaurants</option>
                         <!-- Ajouter d'autres options de catégorie si nécessaire -->
                     </select>
                 </div>
                 <hr>
-                <button type="submit" id="addProjectSubmit">Valider</button>
+                <button type="submit" id="addProjectSubmit" disabled>Valider</button>
             </form>
         `;
         modal2.innerHTML = formHtml;
+
+
     
         document.getElementById('projectImage').addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -205,6 +209,14 @@ document.getElementById('projectImage').addEventListener('change', function(even
         const previewImage = document.getElementById('previewImage');
         previewImage.src = e.target.result;
         previewImage.style.display = 'block';
+        const photoI = document.querySelector('#addProjectForm .form-group-photo i')
+        photoI.style.display ='none';
+
+        const photoLabel = document.querySelector('#addProjectForm .form-group-photo label')
+        photoLabel.style.display ='none';
+
+        const photoP = document.querySelector('#addProjectForm .form-group-photo p')
+        photoP.style.display= 'none';
     };
 
     if (file) {
@@ -212,52 +224,62 @@ document.getElementById('projectImage').addEventListener('change', function(even
     }
 });
 
-// let addProjectForm = document.querySelector('#addProjectForm');
+// let addProjectForm = document.querySelector('#addProjectForm');*
 
-// addProjectForm.addEventListener('submit', function(event) {
-//     event.preventDefault();
+addProjectForm.addEventListener('input' , function(event) {
+    const targetElement = event.target;
+    console.log('targetElement', targetElement);
+        if (addProjectForm.elements[0].value !== "" && addProjectForm.elements[1].value !== "" && addProjectForm.elements[2].value !== "") {
+        //changer la classe et mettre une classe active et je retire l'attribut disabled
+            document.getElementById('addProjectSubmit').classList.add('active');
+            document.getElementById('addProjectSubmit').removeAttribute('disabled');
+        }else {
+        // changer la et enlever une classe active et mettre l'attribut disabled*
+            document.getElementById('addProjectSubmit').classList.remove('active');
+            document.getElementById('addProjectSubmit').setAttribute('disabled', 'disabled');
+    }
+})
 
-//     clearErrors();
+addProjectForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-//         // changer les champs après avoir modifier le html à la 147
-//         // refaire la validation
-//         // faire un appel API
+    const projectName = document.getElementById('projectName').value;
+    const projectCategory = document.getElementById('projectCategory').value;
+    const projectImage = document.getElementById('projectImage').files[0];
 
-//     const projectName = document.getElementById('projectName').value;
-//     const projectDescription = document.getElementById('projectDescription').value;
-//     const projectCategory = document.getElementById('projectCategory').value;
-//     const projectImage = document.getElementById('projectImage').files[0];
+        if (!projectName || !projectCategory || !projectImage) {
+            displayError('Tous les champs sont requis.');
+            return;
+        }
 
-//         if (!projectName || !projectDescription || !projectCategory || !projectImage) {
-//             displayError('Tous les champs sont requis.');
-//             return;
-//         }
+    const formData = new FormData();
+    formData.append('title', projectName);
+    formData.append('category', projectCategory);
+    formData.append('image', projectImage);
 
-//     const formData = new FormData();
-//     formData.append('projectName', projectName);
-//     formData.append('projectDescription', projectDescription);
-//     formData.append('projectCategory', projectCategory);
-//     formData.append('projectImage', projectImage);
 
-//     fetch('/api/addProject', {
-//         method: 'POST',
-//         body: formData
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.success) {
-//                 alert('Projet ajouté avec succès');
-//                 addProjectForm.reset();
-//                 document.getElementById('previewImage').style.display = 'none';
-//             } else {
-//                 displayError(data.message || 'Une erreur est survenue lors de l\'ajout du projet.');
-//             }
-//         })
-//         .catch(error => {
-//             displayError('Une erreur est survenue lors de l\'ajout du projet.');
-//             console.error('Error:', error);
-//         });
-// });
+    fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+                alert('Projet ajouté avec succès');
+                addProjectForm.reset();
+                document.getElementById('previewImage').style.display = 'none';
+            } else {
+                displayError(data.message || 'Une erreur est survenue lors de l\'ajout du projet.');
+            }
+        })
+        .catch(error => {
+            displayError('Une erreur est survenue lors de l\'ajout du projet.');
+            console.error('Error:', error);
+        });
+});
 
 // function clearErrors() {
 //     const errorElement = document.getElementById('formError');
@@ -266,14 +288,14 @@ document.getElementById('projectImage').addEventListener('change', function(even
 //     }
 // }
 
-// function displayError(message) {
-//     const errorElement = document.createElement('div');
-//     errorElement.id = 'formError';
-//     errorElement.style.color = 'red';
-//     errorElement.innerText = message;
-//     const form = document.getElementById('addProjectForm');
-//     form.prepend(errorElement);
-// }
+function displayError(message) {
+    const errorElement = document.createElement('div');
+    errorElement.id = 'formError';
+    errorElement.style.color = 'red';
+    errorElement.innerText = message;
+    const form = document.getElementById('addProjectForm');
+    form.prepend(errorElement);
+}
 
 // displayAddProjectForm();
 

@@ -43,6 +43,8 @@
     width: 21px;
     height: 21px;
 
+    text-decoration: none;
+
     color: #000;
 
     cursor: pointer;
@@ -160,12 +162,14 @@ h3 {
 	font-weight: 700;
     font-size: 14px;
     line-height: 16.8px;
+
+    cursor: pointer;
 }
 
 #addProjectForm {
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 35px;
     font-family: Arial, sans-serif;
 }
 
@@ -174,8 +178,7 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 420px;
-    height: 169px;
+    width: 100%;
 
     margin-top: 20px;
     
@@ -216,14 +219,24 @@ h3 {
 
     cursor: pointer;
 }
+
+#addProjectForm #projectImage {
+    visibility: hidden;
+}
 /* #addProjectForm label:hover {
     background-color: #0056b3;
 } */
+#addProjectForm .form-group-photo p {
+    width: 94px;
+    height: 12px;
 
+    font-size: 10px;
+    font-family: 'Work Sans';
+    font-weight: 400;
+}
 
-#addProjectForm input,
-#addProjectForm textarea {
-    width: 420px;
+#projectName {
+    width: 83%;
     padding: 10px;
     margin-bottom: 10px;
     font-size: 16px;
@@ -274,4 +287,14 @@ h3 {
     font-size: 14px;
     margin-top: -8px;
     margin-bottom: 10px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.09);
+    border: none;
+    cursor: pointer;
 }

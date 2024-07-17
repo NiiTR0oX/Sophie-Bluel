@@ -25,4 +25,5 @@
 }
 p {
     display: contents;
+    cursor: pointer;
 }
