@@ -153,7 +153,7 @@ if (token) {
                     <i class="fa-regular fa-image" aria-hidden="true"></i>
                     <label for="projectImage">+ Ajouter une photo</label>
                     <input type="file" id="projectImage" name="projectImage" accept="image/*" required>
-                    <img id="previewImage" src="#" alt="Aperçu de l'image" style="display: none; width: 200px; height: auto;"/>
+                    <img id="previewImage" src="#" alt="Aperçu de l'image" style="display: none; width: 26%; height: auto;"/>
                     <p>jpg, png : 4mo max</p>
                 </div>
                 <div class="form-group">
@@ -224,21 +224,41 @@ document.getElementById('projectImage').addEventListener('change', function(even
     }
 });
 
-// let addProjectForm = document.querySelector('#addProjectForm');*
+// addProjectForm.addEventListener('input' , function(event) {
+//     const targetElement = event.target;
+//     console.log('targetElement', targetElement);
+//         if (addProjectForm.elements[0].value !== "" && addProjectForm.elements[1].value !== "" && addProjectForm.elements[2].value !== "") {
+//         //changer la classe et mettre une classe active et je retire l'attribut disabled
+//             // document.getElementById('addProjectSubmit').classList.add('active');
+//             // document.getElementById('addProjectSubmit').removeAttribute('disabled');
+//         }else {
+//         // changer la et enlever une classe active et mettre l'attribut disabled*
+//             // document.getElementById('addProjectSubmit').classList.remove('active');
+//             // document.getElementById('addProjectSubmit').setAttribute('disabled', 'disabled');
+//     }
+// })
 
-addProjectForm.addEventListener('input' , function(event) {
-    const targetElement = event.target;
-    console.log('targetElement', targetElement);
-        if (addProjectForm.elements[0].value !== "" && addProjectForm.elements[1].value !== "" && addProjectForm.elements[2].value !== "") {
-        //changer la classe et mettre une classe active et je retire l'attribut disabled
-            document.getElementById('addProjectSubmit').classList.add('active');
-            document.getElementById('addProjectSubmit').removeAttribute('disabled');
+    addProjectForm.addEventListener('input', function(event) {
+     const targetElement = event.target;
+        console.log('targetElement', targetElement);
+
+        const submitButton = addProjectForm.querySelector('button[type="submit"]');
+        const photoInput = addProjectForm.querySelector('input[type="file"]');
+
+        if  (addProjectForm.elements[0].value !== "" && addProjectForm.elements[1].value !== "" && addProjectForm.elements[2].value !== "") {
+            // photoInput.files.length > 0) {
+        
+        // Ajouter une classe active, retirer l'attribut disabled, et changer la couleur en vert
+            submitButton.classList.add('active');
+            submitButton.removeAttribute('disabled');
+            submitButton.style.backgroundColor = '#1D6154'; // Change la couleur du bouton en vert
         }else {
-        // changer la et enlever une classe active et mettre l'attribut disabled*
-            document.getElementById('addProjectSubmit').classList.remove('active');
-            document.getElementById('addProjectSubmit').setAttribute('disabled', 'disabled');
-    }
-})
+        // Enlever la classe active, ajouter l'attribut disabled, et remettre la couleur d'origine
+            submitButton.classList.remove('active');
+            submitButton.setAttribute('disabled', 'true');
+            submitButton.style.backgroundColor = ''; // Remet la couleur d'origine du bouton
+        }
+    });
 
 addProjectForm.addEventListener('submit', function(event) {
     event.preventDefault();
