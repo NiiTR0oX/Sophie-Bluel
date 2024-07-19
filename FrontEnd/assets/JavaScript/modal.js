@@ -37,6 +37,19 @@ if (token) {
         arrowLeft.classList.toggle('hidden')
     })
 
+    arrowLeft.addEventListener('click', function(event) {
+        console.log(event);
+        modal1.classList.remove('hidden');
+        modal2.classList.add('hidden');
+        arrowLeft.classList.add('hidden');
+    });
+
+    // Écouteur d'événement pour la croix de fermeture
+    windowClose.addEventListener('click', function(event) {
+        console.log(event);
+        closeModals();
+    });
+
     modifyButton.addEventListener('click', function(event) {
         console.log(event)
         event.preventDefault();
