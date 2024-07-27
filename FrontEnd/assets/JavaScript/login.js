@@ -1,5 +1,3 @@
-// input formulary + form quesry.selector //
-
 const loginForm = document.querySelector('#user_login_form');
 const emailInput = loginForm.querySelector('input[type="email"]');
 const emailError = document.querySelector('.emailerror');

@@ -1,34 +1,15 @@
-// récupérer le bouton modifier via le modAdmin.js dans la variable //
-// mettre un écouteur d'evenement sur le bouton au click et dans cette écouteur d'evenement faire apparaitre la modale//
-// export const modifyButton = document.querySelector('#modify-button');
-
-// import { modifyButton } from './modAdmin.js';
-
-
-// let token = sessionStorage.getItem("token");
 let btnAdd = document.querySelector('#btn_add')
 let modal1 = document.querySelector('.modal_1')
 let modal2 = document.querySelector('.modal_2')
 let arrowLeft = document.querySelector('.fa-arrow-left')
 let windowClose = document.querySelector('#close')
+let modal_container = document.querySelector('.modal_container')
 
 
 
 if (token) {
     const modifyButton = document.querySelector('#modify-button');
     console.log(modifyButton)
-    // let login_link = document.querySelector('#login_link');
-    // login_link.innerHTML = `<a id="nav-logout" class="only_admin" href="#">logout</a>`;
-
-    // let navLogout = document.querySelector('#nav-logout');
-
-    // navLogout.addEventListener('click', function(event) {
-    //     event.preventDefault();
-    //     sessionStorage.removeItem("token");
-    //     window.location.reload();
-    // });
-
-    //
 
     btnAdd.addEventListener('click', function(event) {
         console.log(event)
@@ -44,10 +25,11 @@ if (token) {
         arrowLeft.classList.add('hidden');
     });
 
-    // Écouteur d'événement pour la croix de fermeture
     windowClose.addEventListener('click', function(event) {
         console.log(event);
-        closeModals();
+        modal1.classList.remove('hidden');
+        modal2.classList.add('hidden');
+        modal_container.classList.add('hidden');
     });
 
     modifyButton.addEventListener('click', function(event) {
@@ -71,24 +53,11 @@ if (token) {
         console.log(modal)
         modal.classList.toggle('hidden')   
     }
-    
-    // async function showModalGallery(){
-    //     // await getWorksFromApi()
-    //     // works.forEach((work, index) => {
-        
-    //     // })
-
-    //     // récupérer avec un queryselector <div class="gallery_photo"></div> en injectant avec le projet
-    //     // je dois injecter les figures des projets
-    //     // faire une boucle
-    //     // mettre le bouton avec la poubelle
-                
-    // }
 }
 
     async function displayAllWorksOnModal() {
         try {
-            let works = await getWorksFromApi();
+        await getWorksFromApi();
 
             let galleryContainer = document.querySelector('.gallery_photo');
 
@@ -102,10 +71,6 @@ if (token) {
                 myImg.setAttribute("src", work.imageUrl);
                 myImg.setAttribute("alt", work.title);
                 myFigure.appendChild(myImg);
-
-                // let myFigCaption = document.createElement("figcaption");
-                // myFigCaption.textContent = work.title;
-                // myFigure.appendChild(myFigCaption);
 
                 let deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-button');
@@ -125,17 +90,6 @@ if (token) {
         }
     }
 
-    async function getWorksFromApi() {
-        try {
-            let response = await fetch("http://localhost:5678/api/works");
-            let works = await response.json();
-            return works;
-        } catch (error) {
-            console.error('Erreur lors de la récupération des travaux:', error);
-            return [];
-        }
-    }
-
     async function deleteProject(projectId) {
         try {
             await fetch(`http://localhost:5678/api/works/${projectId}`, {
@@ -145,8 +99,8 @@ if (token) {
                     'Content-Type': 'application/json'
                 }
             });
-            displayAllWorks();
-            displayAllWorksOnModal()
+            await displayAllWorks();
+            await displayAllWorksOnModal()
         } catch (error) {
             console.error('Erreur lors de la suppression du projet:', error);
         }
@@ -177,8 +131,8 @@ if (token) {
                     <label for="projectCategory">Catégorie</label>
                     <select id="projectCategory" name="projectCategory" required>
                         <option value="1">Objet</option>
-                        <option value="categorie2">Appartement</option>
-                        <option value="categorie3">Hotel & restaurants</option>
+                        <option value="2">Appartement</option>
+                        <option value="3">Hotel & restaurants</option>
                         <!-- Ajouter d'autres options de catégorie si nécessaire -->
                     </select>
                 </div>
@@ -210,10 +164,6 @@ if (token) {
 
 let addProjectForm = document.querySelector('#addProjectForm')
 
-//    document.addEventListener('DOMContentLoaded', function() {
-
-//     const form = document.getElementById('projectForm');
-
 document.getElementById('projectImage').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -237,20 +187,6 @@ document.getElementById('projectImage').addEventListener('change', function(even
     }
 });
 
-// addProjectForm.addEventListener('input' , function(event) {
-//     const targetElement = event.target;
-//     console.log('targetElement', targetElement);
-//         if (addProjectForm.elements[0].value !== "" && addProjectForm.elements[1].value !== "" && addProjectForm.elements[2].value !== "") {
-//         //changer la classe et mettre une classe active et je retire l'attribut disabled
-//             // document.getElementById('addProjectSubmit').classList.add('active');
-//             // document.getElementById('addProjectSubmit').removeAttribute('disabled');
-//         }else {
-//         // changer la et enlever une classe active et mettre l'attribut disabled*
-//             // document.getElementById('addProjectSubmit').classList.remove('active');
-//             // document.getElementById('addProjectSubmit').setAttribute('disabled', 'disabled');
-//     }
-// })
-
     addProjectForm.addEventListener('input', function(event) {
      const targetElement = event.target;
         console.log('targetElement', targetElement);
@@ -259,17 +195,13 @@ document.getElementById('projectImage').addEventListener('change', function(even
         const photoInput = addProjectForm.querySelector('input[type="file"]');
 
         if  (addProjectForm.elements[0].value !== "" && addProjectForm.elements[1].value !== "" && addProjectForm.elements[2].value !== "") {
-            // photoInput.files.length > 0) {
-        
-        // Ajouter une classe active, retirer l'attribut disabled, et changer la couleur en vert
             submitButton.classList.add('active');
             submitButton.removeAttribute('disabled');
-            submitButton.style.backgroundColor = '#1D6154'; // Change la couleur du bouton en vert
+            submitButton.style.backgroundColor = '#1D6154';
         }else {
-        // Enlever la classe active, ajouter l'attribut disabled, et remettre la couleur d'origine
             submitButton.classList.remove('active');
             submitButton.setAttribute('disabled', 'true');
-            submitButton.style.backgroundColor = ''; // Remet la couleur d'origine du bouton
+            submitButton.style.backgroundColor = ''; 
         }
     });
 
@@ -300,10 +232,17 @@ addProjectForm.addEventListener('submit', function(event) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
+        console.log(data)
+        if (data) {
                 alert('Projet ajouté avec succès');
                 addProjectForm.reset();
                 document.getElementById('previewImage').style.display = 'none';
+                document.querySelector('.form-group-photo label').style.display = 'flex';
+                document.querySelector('.form-group-photo p').style.display = 'block';
+                document.querySelector('.form-group-photo i').style.display = 'block';
+                displayAllWorks();
+                console.log(works)
+                displayAllWorksOnModal()
             } else {
                 displayError(data.message || 'Une erreur est survenue lors de l\'ajout du projet.');
             }
@@ -314,13 +253,6 @@ addProjectForm.addEventListener('submit', function(event) {
         });
 });
 
-// function clearErrors() {
-//     const errorElement = document.getElementById('formError');
-//     if (errorElement) {
-//         errorElement.remove();
-//     }
-// }
-
 function displayError(message) {
     const errorElement = document.createElement('div');
     errorElement.id = 'formError';
@@ -329,84 +261,3 @@ function displayError(message) {
     const form = document.getElementById('addProjectForm');
     form.prepend(errorElement);
 }
-
-// displayAddProjectForm();
-
-//         let valid = true;
-
-//         if (!projectName) {
-//             showError('projectNameError', 'Le nom du projet est requis.');
-//             valid = false;
-//         }
-
-//         if (!projectDescription) {
-//             showError('projectDescriptionError', 'La description du projet est requise.');
-//             valid = false;
-//         }
-
-//         if (!startDate) {
-//             showError('startDateError', 'La date de début est requise.');
-//             valid = false;
-//         }
-
-//         if (!endDate) {
-//             showError('endDateError', 'La date de fin est requise.');
-//             valid = false;
-//         }
-
-//         if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
-//             showError('endDateError', 'La date de fin doit être postérieure à la date de début.');
-//             valid = false;
-//         }
-
-//         if (valid) {
-//             const projectData = {
-//                 projectName,
-//                 projectDescription,
-//                 startDate,
-//                 endDate
-//             };
-
-//             fetch('http://localhost:5678/api/works', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     'Authorization': `Bearer ${token}`
-//                 },
-//                 body: JSON.stringify(projectData)
-//             })
-//             .then(response => {
-//                 if (response.ok) {
-//                     return response.json();
-//                 }
-//                 throw new Error('Erreur réseau lors de l\'envoi du formulaire.');
-//             })
-//             .then(data => {
-//                 if (data.success) {
-//                     alert('Projet ajouté avec succès !');
-//                     form.reset();
-//                 } else {
-//                     alert('Une erreur est survenue : ' + data.message);
-//                 }
-//             })
-//             .catch(error => {
-//                 console.error('Erreur:', error);
-//                 alert('Une erreur est survenue lors de l\'envoi des données.');
-//             });
-//         }
-
-//     function showError(elementId, message) {
-//         const errorElement = document.getElementById(elementId);
-//         if (errorElement) {
-//             errorElement.textContent = message;
-//         }
-//     }
-
-//     function clearErrors() {
-//         document.querySelectorAll('.error').forEach(error => error.textContent = '');
-//     }
-
-// // });
-
-
-// // Gérer les 3 champs en vérifiant qui ne sont pas vide si il ne le sont pas vide, activer le bouton le tout dans une function

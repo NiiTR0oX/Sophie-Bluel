@@ -3,10 +3,8 @@ let token = sessionStorage.getItem("token")
 if(token) {
     let login_link = document.querySelector('#login_link')
     login_link.innerHTML = `<a id="nav-logout" class="only_admin" href="#">logout</a>`
-    // <a id="nav-logout" class="only_admin" href="#">logout</a>
-    let navLogout = document.querySelector('#nav-logout')
 
-// const navLogout = document.querySelector('#nav-logout');
+    let navLogout = document.querySelector('#nav-logout')
 
     navLogout.addEventListener('click', function(event) {
         event.preventDefault();
