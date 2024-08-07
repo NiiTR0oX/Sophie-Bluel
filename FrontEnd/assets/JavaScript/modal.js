@@ -6,6 +6,8 @@ let arrowLeft = document.querySelector('.fa-arrow-left')
 let windowClose = document.querySelector('#close')
 let modal_container = document.querySelector('.modal_container')
 
+let overlay = document.querySelector('.overlay')
+
 // Vérifie si l'utilisateur est connecté (token présent)
 if (token) {
     // Sélectionne le bouton de modification dans la barre de navigation
@@ -33,6 +35,8 @@ if (token) {
         modal1.classList.remove('hidden');
         modal2.classList.add('hidden');
         modal_container.classList.add('hidden');
+        
+        overlayModal();
     });
     // Événement au clic sur le bouton de modification pour afficher la modal
     modifyButton.addEventListener('click', function(event) {
@@ -56,8 +60,21 @@ if (token) {
     function showModal() {
         let modal = document.querySelector('.modal_container')
         console.log(modal)
-        modal.classList.toggle('hidden')   
+        modal.classList.toggle('hidden')
+
+        modal_container.classList.remove('hidden');
+        overlay.classList.remove('hidden');  
     }
+
+    function overlayModal() {
+        modal_container.classList.add('hidden');
+        overlay.classList.add('hidden');
+    }
+
+    overlay.addEventListener('click', function(event) {
+        console.log(event);
+        overlayModal(); // Ferme la modal et l'overlay
+    });
 }
 
     // Fonction pour afficher tous les travaux dans la modal
